@@ -31,6 +31,9 @@
         <input type="text" id="choice2" name="choice2">
 
     </fieldset>
+    {% if added == True %}
+    <h4>{{ "Added a new poll!" }}</h4>
+    {% endif %}
     <input type="submit" value="Create">
     </form>
     <br>

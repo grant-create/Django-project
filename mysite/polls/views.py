@@ -83,7 +83,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         # Return the last five published questions
-        return Question.objects.order_by('-pub_date')[:5]
+        return Question.objects.order_by('-pub_date')
 
 
 class DetailView(generic.DetailView):
@@ -110,11 +110,11 @@ def vote(request, question_id):
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 def new(request):
-   
-    context ={}
+    added = False
+    context ={"added":"added"}
     if request.method == "POST":
         print(request.POST['newquestion'])
-    
+        added = True
         q = Question(question_text=request.POST['newquestion'], pub_date=timezone.now())
         q.save()
         #print(q)
@@ -123,6 +123,6 @@ def new(request):
         
     #return render(request, 'poll/index.html')
     #return HttpResponse("You're making a new question")
-
+    added = False
         
     return render(request, 'polls/new.html', context)
