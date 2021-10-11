@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http import Http404
 from django.urls import reverse
 from django.views import generic
-
+from django.utils import timezone
 from .models import Choice, Question
 
 
@@ -108,3 +108,21 @@ def vote(request, question_id):
         # Always return an HTtpResponseRedirect after successfully dealing with POST data
         # this prevents data from being posted twice if a user hits the back button
     return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+def new(request):
+   
+    context ={}
+    if request.method == "POST":
+        print(request.POST['newquestion'])
+    
+        q = Question(question_text=request.POST['newquestion'], pub_date=timezone.now())
+        q.save()
+        #print(q)
+        q.choice_set.create(choice_text=request.POST['choice1'], votes=0)
+        q.choice_set.create(choice_text=request.POST['choice2'], votes=0)
+        
+    #return render(request, 'poll/index.html')
+    #return HttpResponse("You're making a new question")
+
+        
+    return render(request, 'polls/new.html', context)

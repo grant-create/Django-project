@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="{% url 'polls:new' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+
+        <legend>
+            <h1>
+                Add a new poll
+            </h1>
+        </legend>
+        
+        {% if error_message %} <p><strong>{{ error_message }} </strong></p>
+        {% endif %}
+
+        <label for="newquestion">Poll Question</label>
+        <input type="text" id="newquestion" name="newquestion">
+        <br>
+        <br>
+        <label for="choice1">Choice 1</label>
+        <input type="text" id="choice1" name="choice1">
+        <label for="choice2">Choice 2</label>
+        <input type="text" id="choice2" name="choice2">
+
+    </fieldset>
+    <input type="submit" value="Create">
+    </form>
+    <br>
+    <a href="{% url 'polls:index' %}">Back to All Polls</a>
+</body>
+</html>
